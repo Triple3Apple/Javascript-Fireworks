@@ -34,7 +34,7 @@ function draw() {
   
   if (random(1) < fireworkChance) {
     // create fireworks
-    fireworks.push(new Firework());
+    fireworks.push(new Firework(1, true));    // Creates FIREWORK ovject!!!!!!!!!!!
   }
   
   for (let i = fireworks.length - 1; i >= 0; i--) {

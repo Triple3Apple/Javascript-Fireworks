@@ -6,13 +6,18 @@
 
 class Firework {
 
-    constructor() {
+    // fireworkTypes holds array of firework types (1 = normal fireworks, 2 = creeper fireworks)
+    // hasRnadomAngle is a bool that determines if fireworks have a random angle
+    constructor(fireworkTypes, hasRandomAngle) {
         this.hu = random(255);
         this.firework = new Particle(random(width), height, this.hu, true);
         this.exploded = false;
         this.particles = [];      // will be filled once firework explodes, explode()
         this.patterns = new FireworkPatterns();
         this.sway = createVector(random(-0.02, 0.02), 0);
+
+        this.types = fireworkTypes; // holds array of firework types (1 = normal fireworks, 2 = creeper fireworks)
+        this.hasRandomAngle = hasRandomAngle;
     }
 
     done() {
@@ -33,7 +38,7 @@ class Firework {
             // if velocity is getting positive (going down), then make firework explode
             if (this.firework.vel.y >= -1) {
                 this.exploded = true;
-                this.explode();
+                this.explode(1, this.hasRandomAngle);
             }
         }
 
@@ -48,9 +53,29 @@ class Firework {
     }
 
     // create a bunch of particles
-    explode() {
+    explode(type, hasRandomAngle) {
+        // TODO: select a random pattern?
         let selectedPattern = this.patterns.creeperVectorArray;
               // create a particle at each pattern index
+        //console.log(selectedPattern);
+
+        if (hasRandomAngle)
+        {
+            //USE THIS FOR LOOP IF ANGLE NEEDS TO BE Random
+            // Dont know why the code below works.. (Figure Out)
+            let min = Math.ceil(-90);
+            let max = Math.floor(90);
+            let angle = Math.floor(Math.random() * (max - min + 1)) + min;
+            angle = angle * (Math.PI/180);  // converting to radian
+            //console.log(angle);
+            for (let patternIndexTemp = 0;  patternIndexTemp < selectedPattern.length; patternIndexTemp++)
+            {
+                let xTemp = selectedPattern[patternIndexTemp].x;
+                let yTemp = selectedPattern[patternIndexTemp].y;
+                selectedPattern[patternIndexTemp].x = (Math.cos(angle) * xTemp) + (yTemp * Math.sin(angle));
+                selectedPattern[patternIndexTemp].y = (-Math.sin(angle) * xTemp) + (Math.cos(Math.PI/4) * yTemp);
+            }
+        }
 
         for (let patternIndexTemp = 0;  patternIndexTemp < selectedPattern.length; patternIndexTemp++) {
             
@@ -71,5 +96,11 @@ class Firework {
         for (var i = 0; i < this.particles.length; i++) {
             this.particles[i].show();
         }
+    }
+
+    getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 }
