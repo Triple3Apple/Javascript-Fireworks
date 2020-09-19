@@ -2,44 +2,27 @@
 // http://codingtra.in
 // https://youtu.be/CKeyIbT3vXI
 
-// {0.0D, 0.2D}d, {0.2D, 0.2D}d, {0.2D, 0.6D}d, {0.6D, 0.6D}d, 
-// {0.6D, 0.2D}d, {0.2D, 0.2D}d, {0.2D, 0.0D}d, {0.4D, 0.0D}d, 
-// {0.4D, -0.6D}d, {0.2D, -0.6D}d, {0.2D, -0.4D}, {0.0D, -0.4D}
-// let creeperVectors = [createVector(0, 2), createVector(2, 2), createVector(2, 6), createVector(6, 6),
-//                       createVector(6, 2), createVector(2, 2), createVector(2, 0), createVector(4, 0),
-//                       createVector(4, -6), createVector(2, -6), createVector(2, -4), createVector(0, -4)];
-//let creeperVectors = [];
-
-// CANT USE createVector() outside class????
-
-
-// let creeperVectorsX =   [-3, -2, -1, 1, 2, 3,
-//                         -3, -1, 1, 3,
-//                         -3, -2, -1, 0, 1, 1, 3,
-//                         -2, -1, 1, 1,
-//                         -2, 2,
-//                         -2, -1, 0, 1, 2,
-//                         -2, -1, 1, 2];
-
-// let creeperVectorsY =   [-3, -3, -3, -3, -3, -3,
-//                         -2, -2, -2, -2,
-//                         -1, -1, -1, -1, -1, -1, -1,
-//                         0, 0, 0, 0,
-//                         1, 1,
-//                         2, 2, 2, 2, 2,
-//                         3, 3, 3, 3];
-
+// Modified by: Triple3Apple
 let test = [121210, 1, 2, 3, 45, 4545, 4557345, 45246246, 23865];
 
 class Particle {
 
-    constructor(x, y, hu, hasExploded, index, chosenPatternArray) {
+    // willSparkle controls whether the firework will sparkle
+    constructor(x, y, hu, hasExploded, index, chosenPatternArray, willSparkle) {
         this.pos = createVector(x, y);
         this.fireworkExploded = hasExploded;
         //this.lifespan = 255; //    - random(0, 200);        // firework lifetime
-        this.lifespan = 275 - random(0, 90);
+        this.lifespan = 275 - random(0, 90);        // defualt = 275
         this.hu = hu;
         this.acc = createVector(0, 0);      // acceleration
+        this.willSparkle = willSparkle;
+        this.makeSparkleAppear = false;
+        this.randomSparkleDuration = random(0, 10);
+        this.sparkleTime = this.lifespan/2;
+
+        // will be used to control sparkle
+        this.satAndBalance = 255;
+
         if (!hasExploded) {
             this.particleIndex = index;
             this.vectorPatternArray = chosenPatternArray;
@@ -82,8 +65,27 @@ class Particle {
     update() {
         if (!this.fireworkExploded) {
             this.vel.mult(0.9);
-            this.lifespan -= 4;
+            this.lifespan -= 4;         // reduces firework lifespan
+
+            // sparkle code
+            if (this.willSparkle == true && this.lifespan < this.sparkleTime )
+            {
+                if (this.makeSparkleAppear == false)
+                {
+                    this.satAndBalance -= (30 - this.randomSparkleDuration);
+                    if (this.satAndBalance <= 30) this.makeSparkleAppear = true;
+                } 
+                else 
+                {
+                    this.satAndBalance += (30 - this.randomSparkleDuration);
+                    if (this.satAndBalance >= 220) this.makeSparkleAppear = false;
+                }
+
+
+                
+            }
         }
+
         this.vel.add(this.acc);     // adding acceleration to velocity
         this.pos.add(this.vel);     // adding velocity to position
         this.acc.mult(0);           // accleration at each moment of time will start at 0
@@ -102,7 +104,8 @@ class Particle {
 
         if (!this.fireworkExploded) {
             strokeWeight(2);
-            stroke(this.hu, 255, 255, this.lifespan);
+            // this.hu contols the color
+            stroke(this.hu, this.satAndBalance, this.satAndBalance, this.lifespan);
         } else {
             strokeWeight(4);
             stroke(this.hu, 255, 255);

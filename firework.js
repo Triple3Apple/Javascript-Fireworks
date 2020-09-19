@@ -2,20 +2,21 @@
 // http://codingtra.in
 // https://youtu.be/CKeyIbT3vXI
 
-// Modified by: Abrar Akhand
+// Modified by: Triple3Apple
 
 class Firework {
 
     // fireworkTypes holds array of firework types (1 = normal fireworks, 2 = creeper fireworks)
     // hasRnadomAngle is a bool that determines if fireworks have a random angle
-    constructor(fireworkTypes, hasRandomAngle) {
+    // sparkle (bool) decides whether the firework particle will sparkle
+    constructor(fireworkTypes, hasRandomAngle, sparkle) {
         this.hu = random(255);
         this.firework = new Particle(random(width), height, this.hu, true);
         this.exploded = false;
         this.particles = [];      // will be filled once firework explodes, explode()
         this.patterns = new FireworkPatterns();
         this.sway = createVector(random(-0.02, 0.02), 0);
-
+        this.willSparkle = sparkle;
         this.types = fireworkTypes; // holds array of firework types (1 = normal fireworks, 2 = creeper fireworks)
         this.hasRandomAngle = hasRandomAngle;
     }
@@ -77,12 +78,9 @@ class Firework {
             }
         }
 
+        // Creating the small particles
         for (let patternIndexTemp = 0;  patternIndexTemp < selectedPattern.length; patternIndexTemp++) {
-            
-
-            //console.log(patternIndex);
-
-            const p = new Particle(this.firework.pos.x, this.firework.pos.y, this.hu, false, patternIndexTemp, selectedPattern);
+            const p = new Particle(this.firework.pos.x, this.firework.pos.y, this.hu, false, patternIndexTemp, selectedPattern, this.willSparkle);
             this.particles.push(p);
             //patternIndex++;
         }

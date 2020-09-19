@@ -2,7 +2,8 @@
 // http://codingtra.in
 // https://youtu.be/CKeyIbT3vXI
 
-// Modified by: Abrar Akhand
+// Modified by: Triple3Apple
+
 
 const fireworks = [];
 let gravity;
@@ -33,8 +34,9 @@ function draw() {
   clear()
   
   if (random(1) < fireworkChance) {
-    // create fireworks
-    fireworks.push(new Firework(1, true));    // Creates FIREWORK ovject!!!!!!!!!!!
+    // TODO: allow users to choose what they want for the fireworks 
+    // create fireworks (firework types, hasRandomAngle, willSparkle)
+    fireworks.push(new Firework(1, true, true));    // Creates FIREWORK object!!!!!!!!!!!
   }
   
   for (let i = fireworks.length - 1; i >= 0; i--) {
