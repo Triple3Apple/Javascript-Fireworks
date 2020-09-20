@@ -73,8 +73,9 @@ class Firework {
             case 2: // creeper firework
                 selectedPattern = this.patterns.creeperVectorArray;
                 break;
-            case 3:
-                // another pattern here
+            case 3: // heart firework
+                selectedPattern = this.patterns.heartVectorArray;
+                break;
             default:
                 selectedPattern = null;
                 break;

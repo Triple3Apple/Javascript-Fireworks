@@ -39,7 +39,7 @@ class FireworkPatterns {
         2.5, 2.5, 2.5, 2.5,
         3, 3, 3, 3, 3, 3];
 
-        this.creeperVectorArray = this.combineVectorsComps(this.creeperVectorsX, this.creeperVectorsY);
+        this.creeperVectorArray = this.combineVectorsComps(this.creeperVectorsX, this.creeperVectorsY, 1);
 
         this.heartVectorsX = 
         [
@@ -48,7 +48,7 @@ class FireworkPatterns {
             -6, 0, 6,
             -6, 6,
             -6, 6,
-            -6, 6,
+            -5.75, 5.75,
             -5, 5,
             -4, 4,
             -3, 3,
@@ -59,16 +59,30 @@ class FireworkPatterns {
 
         this.heartVectorsY = 
         [
-            
+            -5, -5, -5, -5, -5, -5,
+            -4, -4, -4, -4,
+            -3, -3, -3, 
+            -2 , -2,
+            -1, -1,
+            0, 0,
+            1, 1,
+            2, 2,
+            3, 3,
+            4, 4,
+            5, 5,
+            6
         ]
+
+        this.heartVectorArray = this.combineVectorsComps(this.heartVectorsX, this.heartVectorsY, 2);
     }
 
-    combineVectorsComps(vectX, vectY) {
+    // reductionInt reduces the size of the vectors
+    combineVectorsComps(vectX, vectY, reductionInt) {
 
         let combined = [];
 
         for (let i = 0; i < vectX.length; i++) {
-            combined.unshift(createVector(vectX[i], vectY[i]));
+            combined.unshift(createVector(vectX[i]/reductionInt, vectY[i]/reductionInt));
         }
         return combined;
 
