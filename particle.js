@@ -8,17 +8,19 @@ let test = [121210, 1, 2, 3, 45, 4545, 4557345, 45246246, 23865];
 class Particle {
 
     // willSparkle controls whether the firework will sparkle
-    constructor(x, y, hu, hasExploded, index, chosenPatternArray, willSparkle) {
+    constructor(x, y, hu, hasExploded, index, chosenPatternArray, willSparkle, fireworkSize) {
         this.pos = createVector(x, y);
         this.fireworkExploded = hasExploded;
         //this.lifespan = 255; //    - random(0, 200);        // firework lifetime
-        this.lifespan = 275 - random(0, 90);        // defualt = 275
+        this.lifespan = 300 - random(0, 120);        // defualt = 275
         this.hu = hu;
         this.acc = createVector(0, 0);      // acceleration
         this.willSparkle = willSparkle;
         this.makeSparkleAppear = false;
         this.randomSparkleDuration = random(0, 10);
         this.sparkleTime = this.lifespan/2;
+
+        this.size = fireworkSize;   // controls the size of firework
 
         // will be used to control sparkle
         this.satAndBalance = 255;
@@ -33,6 +35,18 @@ class Particle {
             this.vel = createVector(0, random(-18, -8));    // velocity, y determines how high firework will go, x is horizontal drift
             //this.vel = createVector(random(2, -2), random(-12, -8));      // this makes the fireworks curve a bit
         } else {
+
+            if (this.vectorPatternArray == null)    // normal fireworks
+            {
+                this.vel = p5.Vector.random2D();    // random 2d direction vector (original)
+                this.vel.mult(this.size/3);
+                this.vel.mult(random(2, 10));       // how dar the partcles spread out, random(2, 100) creates huge fireworks
+            }
+            else    // other firework patterns
+            {
+                this.vel = this.vectorPatternArray[this.particleIndex];
+                this.vel.mult(this.size);
+            }
             // fire work has exploded
             //this.vel = p5.Vector.random2D();    // random 2d direction vector (original)
             //this.vel.mult(random(2, 10));       // how dar the partcles spread out, random(2, 100) creates huge fireworks
@@ -45,8 +59,7 @@ class Particle {
             // new
             //console.log(randomIndex);
             //this.vel = createVector(creeperVectorsX[randomIndex], creeperVectorsY[randomIndex]);
-            this.vel = this.vectorPatternArray[this.particleIndex];
-            this.vel.mult(5);
+            
 
 
             //this.vel = this.creeperVectors[random(0, creeperVectors.length)];
@@ -80,9 +93,6 @@ class Particle {
                     this.satAndBalance += (30 - this.randomSparkleDuration);
                     if (this.satAndBalance >= 220) this.makeSparkleAppear = false;
                 }
-
-
-                
             }
         }
 

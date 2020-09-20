@@ -3,6 +3,9 @@
 let creeperVectorsX = [];
 let creeperVectorsY = [];
 
+let heartVectorsX = [];
+let heartVectorsY = [];
+
 class FireworkPatterns {
 
     constructor() {
@@ -37,6 +40,27 @@ class FireworkPatterns {
         3, 3, 3, 3, 3, 3];
 
         this.creeperVectorArray = this.combineVectorsComps(this.creeperVectorsX, this.creeperVectorsY);
+
+        this.heartVectorsX = 
+        [
+            -4, -3, -2, 2, 3, 4,
+            -5, -1, 1, 5,
+            -6, 0, 6,
+            -6, 6,
+            -6, 6,
+            -6, 6,
+            -5, 5,
+            -4, 4,
+            -3, 3,
+            -2, 2,
+            -1, 1,
+            0
+        ]
+
+        this.heartVectorsY = 
+        [
+            
+        ]
     }
 
     combineVectorsComps(vectX, vectY) {

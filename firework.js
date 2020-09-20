@@ -7,7 +7,7 @@
 class Firework {
 
     // fireworkTypes holds array of firework types (1 = normal fireworks, 2 = creeper fireworks)
-    // hasRnadomAngle is a bool that determines if fireworks have a random angle
+    // hasRandomAngle is a bool that determines if fireworks have a random angle
     // sparkle (bool) decides whether the firework particle will sparkle
     constructor(fireworkTypes, hasRandomAngle, sparkle) {
         this.hu = random(255);
@@ -39,8 +39,13 @@ class Firework {
             // if velocity is getting positive (going down), then make firework explode
             if (this.firework.vel.y >= -1) {
                 this.exploded = true;
-                this.explode(1, this.hasRandomAngle);
+                //let randomIndex = this.types[random(0, this.types.length - 1)];
+                let randomIndex = this.types[Math.floor(Math.random() * this.types.length)];
+                console.log(randomIndex);
+                this.explode(randomIndex, this.hasRandomAngle);
             }
+
+            
         }
 
         for (let i = this.particles.length - 1; i >= 0; i--) {
@@ -54,36 +59,85 @@ class Firework {
     }
 
     // create a bunch of particles
-    explode(type, hasRandomAngle) {
+    explode(fireworkType, hasRandomAngle) {
+        // generate random firework size
+        let fireworkSize = random(3, 6);
+
         // TODO: select a random pattern?
-        let selectedPattern = this.patterns.creeperVectorArray;
+        let selectedPattern;
+        switch (fireworkType)
+        {
+            case 1: // regular firework
+                selectedPattern = null;
+                break;
+            case 2: // creeper firework
+                selectedPattern = this.patterns.creeperVectorArray;
+                break;
+            case 3:
+                // another pattern here
+            default:
+                selectedPattern = null;
+                break;
+            
+        }
+        //let selectedPattern = this.patterns.creeperVectorArray;
               // create a particle at each pattern index
         //console.log(selectedPattern);
 
-        if (hasRandomAngle)
+        if (selectedPattern == null)
         {
-            //USE THIS FOR LOOP IF ANGLE NEEDS TO BE Random
-            // Dont know why the code below works.. (Figure Out)
-            let min = Math.ceil(-90);
-            let max = Math.floor(90);
-            let angle = Math.floor(Math.random() * (max - min + 1)) + min;
-            angle = angle * (Math.PI/180);  // converting to radian
-            //console.log(angle);
-            for (let patternIndexTemp = 0;  patternIndexTemp < selectedPattern.length; patternIndexTemp++)
+            for (let patternIndexTemp = 0;  patternIndexTemp < 50; patternIndexTemp++) {
+                const p = new Particle(
+                    this.firework.pos.x, 
+                    this.firework.pos.y, 
+                    this.hu, 
+                    false, 
+                    patternIndexTemp, 
+                    selectedPattern, 
+                    this.willSparkle,
+                    fireworkSize);
+
+                this.particles.push(p);
+                //patternIndex++;
+            }
+        }
+        else
+        {
+            if (hasRandomAngle)
             {
-                let xTemp = selectedPattern[patternIndexTemp].x;
-                let yTemp = selectedPattern[patternIndexTemp].y;
-                selectedPattern[patternIndexTemp].x = (Math.cos(angle) * xTemp) + (yTemp * Math.sin(angle));
-                selectedPattern[patternIndexTemp].y = (-Math.sin(angle) * xTemp) + (Math.cos(Math.PI/4) * yTemp);
+                //USE THIS FOR LOOP IF ANGLE NEEDS TO BE Random
+                // Dont know why the code below works.. (Figure Out)
+                let min = Math.ceil(-90);
+                let max = Math.floor(90);
+                let angle = Math.floor(Math.random() * (max - min + 1)) + min;
+                angle = angle * (Math.PI/180);  // converting to radian
+                //console.log(angle);
+                for (let patternIndexTemp = 0;  patternIndexTemp < selectedPattern.length; patternIndexTemp++)
+                {
+                    let xTemp = selectedPattern[patternIndexTemp].x;
+                    let yTemp = selectedPattern[patternIndexTemp].y;
+                    selectedPattern[patternIndexTemp].x = (Math.cos(angle) * xTemp) + (yTemp * Math.sin(angle));
+                    selectedPattern[patternIndexTemp].y = (-Math.sin(angle) * xTemp) + (Math.cos(Math.PI/4) * yTemp);
+                }
+            }
+
+            // Creating the small particles
+            for (let patternIndexTemp = 0;  patternIndexTemp < selectedPattern.length; patternIndexTemp++) {
+                const p = new Particle(
+                    this.firework.pos.x, 
+                    this.firework.pos.y, 
+                    this.hu, 
+                    false, 
+                    patternIndexTemp, 
+                    selectedPattern, 
+                    this.willSparkle,
+                    fireworkSize);
+
+                this.particles.push(p);
+                //patternIndex++;
             }
         }
 
-        // Creating the small particles
-        for (let patternIndexTemp = 0;  patternIndexTemp < selectedPattern.length; patternIndexTemp++) {
-            const p = new Particle(this.firework.pos.x, this.firework.pos.y, this.hu, false, patternIndexTemp, selectedPattern, this.willSparkle);
-            this.particles.push(p);
-            //patternIndex++;
-        }
     }
 
     show() {

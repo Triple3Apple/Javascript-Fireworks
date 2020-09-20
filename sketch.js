@@ -36,7 +36,9 @@ function draw() {
   if (random(1) < fireworkChance) {
     // TODO: allow users to choose what they want for the fireworks 
     // create fireworks (firework types, hasRandomAngle, willSparkle)
-    fireworks.push(new Firework(1, true, true));    // Creates FIREWORK object!!!!!!!!!!!
+    // 1 = normal firework, 2 = creeper firework
+    let fireworkTypesChosen = [1, 2];   // make this chooseable via WPE
+    fireworks.push(new Firework(fireworkTypesChosen, true, true));    // Creates FIREWORK object!!!!!!!!!!!
   }
   
   for (let i = fireworks.length - 1; i >= 0; i--) {
