@@ -6,19 +6,59 @@
 
 class Firework {
 
-    // fireworkTypes holds array of firework types (1 = normal fireworks, 2 = creeper fireworks)
+    // fireworkTypes holds array of firework types (11 = normal fireworks, 12 = creeper fireworks, 13 = heart)
     // hasRandomAngle is a bool that determines if fireworks have a random angle
     // sparkle (bool) decides whether the firework particle will sparkle
-    constructor(fireworkTypes, hasRandomAngle, sparkle) {
+    constructor(fireworkTypes, hasRandomAngle, sparkle, fireworkPatterns, isTime, timeDigit) 
+    {
         this.hu = random(255);
-        this.firework = new Particle(random(width), height, this.hu, true);
+        if (timeDigit == null)
+        {
+            this.firework = new Particle(random(width), height, this.hu, true);
+        }
+        else
+        {
+            switch (timeDigit)
+            {
+                case 1:
+                    this.firework = new Particle(width/5, height, this.hu, true);
+                    break;
+                case 2:
+                    this.firework = new Particle((width/5 + width/5), height, this.hu, true);
+                    break;
+                case 3:
+                    this.firework = new Particle((width/5 + width/5 + width/5), height, this.hu, true);
+                    break;
+                case 4:
+                    this.firework = new Particle((width/5 + width/5 + width/5 + width/5), height, this.hu, true);
+                    break;
+                case 5:
+                    this.firework = new Particle((width/5 + width/5 + width/5 + width/5 + width/5), height, this.hu, true);
+                    break;
+                default:
+                    console.log("error!!!!!!!!!!!");
+                    this.firework = new Particle(random(width), height, this.hu, true);
+                    break;
+            }
+        }
+        
         this.exploded = false;
         this.particles = [];      // will be filled once firework explodes, explode()
-        this.patterns = new FireworkPatterns();
-        this.sway = createVector(random(-0.02, 0.02), 0);
+        //this.patterns = new FireworkPatterns();
+        this.patterns = fireworkPatterns;
+        if (isTime != null)
+        {
+            this.sway = createVector(0, 0);
+        }
+        else
+        {
+            this.sway = createVector(random(-0.02, 0.02), 0);
+        }
+        //this.sway = createVector(random(-0.02, 0.02), 0);
         this.willSparkle = sparkle;
         this.types = fireworkTypes; // holds array of firework types (1 = normal fireworks, 2 = creeper fireworks)
         this.hasRandomAngle = hasRandomAngle;
+        console.log(this.patterns);
     }
 
     done() {
@@ -67,13 +107,25 @@ class Firework {
         let selectedPattern;
         switch (fireworkType)
         {
-            case 1: // regular firework
+            case -1:
+                selectedPattern = this.patterns.colonVectorArray;
+                hasRandomAngle = false; // we dont want angle for numbers
+                break;
+            case 0:
+                selectedPattern = this.patterns.numberZeroVectorArray;
+                hasRandomAngle = false;
+                break;
+            case 1:
+                selectedPattern = this.patterns.numberOneVectorArray;
+                hasRandomAngle = false;
+                break;
+            case 11: // regular firework
                 selectedPattern = null;
                 break;
-            case 2: // creeper firework
+            case 12: // creeper firework
                 selectedPattern = this.patterns.creeperVectorArray;
                 break;
-            case 3: // heart firework
+            case 13: // heart firework
                 selectedPattern = this.patterns.heartVectorArray;
                 break;
             default:

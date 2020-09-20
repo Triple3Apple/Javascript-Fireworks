@@ -7,14 +7,21 @@
 
 const fireworks = [];
 let gravity;
-let fireworkChance = 0.03;      // increase firework chance when it is a current time
+let fireworkChance = 0.01;      // increase firework chance when it is a current time
 
 // new
 let canvas;
+let fireworkPatterns;
+
+let date = new Date();
+let nextMinute;
+let timeSet = false;
 
 function setup() {
   let canvas = createCanvas(windowWidth, windowHeight);
   
+  fireworkPatterns = new FireworkPatterns();
+
   // new
   canvas.position(0, 0);
   canvas.style("z-index", "1")
@@ -24,29 +31,105 @@ function setup() {
   stroke(255);
   strokeWeight(4);
   background(0);
+
+  nextMinute = date.getMinutes() + 1;
+
+  
 }
 
 // TODO: Add a way to make special fireworks go off at every hour?
 
 function draw() {
+
+  
+  if (timeSet == false)
+  {
+    let d = new Date();
+    console.log("nextMinute: " + nextMinute);
+    let tempMinutes = d.getMinutes();
+    console.log("current Minute: " + tempMinutes);
+    if (tempMinutes == nextMinute)
+    {
+      nextMinute = tempMinutes + 1;
+      timeSet = true;
+      console.log("a minute has passed");
+      let fireworkPatterns = new FireworkPatterns();
+      let fireworkTypesChosen = [11];   // make this chooseable via WPE
+      fireworks.push(new Firework(fireworkTypesChosen, true, true, fireworkPatterns, true));    // Creates FIREWORK object
+      let fireworkPatterns1 = new FireworkPatterns();
+      fireworks.push(new Firework(fireworkTypesChosen, true, true, fireworkPatterns1, true));
+      fireworkTypesChosen = [-1];
+      let fireworkPatterns2 = new FireworkPatterns();
+      fireworks.push(new Firework(fireworkTypesChosen, true, true, fireworkPatterns2, true));
+      fireworkTypesChosen = [11];
+      let fireworkPatterns3 = new FireworkPatterns();
+      fireworks.push(new Firework(fireworkTypesChosen, true, true, fireworkPatterns3, true));
+      let fireworkPatterns4 = new FireworkPatterns();
+      fireworks.push(new Firework(fireworkTypesChosen, true, true, fireworkPatterns4, true));
+      setInterval(fireTimeFirework, 1000);  // every 60 seconds
+      setInterval(verifyTime, 60000)
+    }
+  }
+
   colorMode(RGB);
   background(0, 0, 0, 25);
   clear()
   
-  if (random(1) < fireworkChance) {
+  if (random(1) < fireworkChance) 
+  {
+    let fireworkPatterns = new FireworkPatterns();
     // TODO: allow users to choose what they want for the fireworks 
     // create fireworks (firework types, hasRandomAngle, willSparkle)
-    // 1 = normal firework, 2 = creeper firework
-    let fireworkTypesChosen = [3];   // make this chooseable via WPE
-    fireworks.push(new Firework(fireworkTypesChosen, false, true));    // Creates FIREWORK object!!!!!!!!!!!
+    // 11 = normal firework, 12 = creeper, 13 = heart
+    // -1 - colon, 0 = number 0, 1 = 1
+    let fireworkTypesChosen = [0];   // make this chooseable via WPE
+    fireworks.push(new Firework(fireworkTypesChosen, true, true, fireworkPatterns, null));    // Creates FIREWORK object
+    
   }
-  
-  for (let i = fireworks.length - 1; i >= 0; i--) {
+
+  for (let i = fireworks.length - 1; i >= 0; i--) 
+  {
     fireworks[i].update();
     fireworks[i].show();
     
     if (fireworks[i].done()) {
       fireworks.splice(i, 1);
     }
+  }
+}
+
+function fireTimeFirework()
+{
+  let d = new Date();
+  console.log("nextMinute: " + nextMinute);
+  let tempMinutes = d.getMinutes();
+  console.log("current Minute: " + tempMinutes);
+  if (tempMinutes == nextMinute)
+  {
+    nextMinute = tempMinutes + 1;
+    //timeSet = true;
+    console.log("a minute has passed");
+    let fireworkPatterns = new FireworkPatterns();
+    let fireworkTypesChosen = [12];   // make this chooseable via WPE
+    fireworks.push(new Firework(fireworkTypesChosen, true, true, fireworkPatterns, 1));    // Creates FIREWORK object
+    let fireworkPatterns1 = new FireworkPatterns();
+    fireworks.push(new Firework(fireworkTypesChosen, true, true, fireworkPatterns1, 2));
+    let fireworkPatterns2 = new FireworkPatterns();
+    fireworks.push(new Firework(fireworkTypesChosen, true, true, fireworkPatterns2, 3));
+    let fireworkPatterns3 = new FireworkPatterns();
+    fireworks.push(new Firework(fireworkTypesChosen, true, true, fireworkPatterns3, 4));
+    let fireworkPatterns4 = new FireworkPatterns();
+    fireworks.push(new Firework(fireworkTypesChosen, true, true, fireworkPatterns4, 5));
+  }
+}
+
+function verifyTime()
+{
+  let d1 = new Date();
+  let tempMinutes = d1.getMinutes();
+
+  if (nextMinute != (tempMinutes + 1))
+  {
+    nextMinute = tempMinutes + 1;
   }
 }

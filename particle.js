@@ -23,7 +23,7 @@ class Particle {
         this.size = fireworkSize;   // controls the size of firework
 
         // will be used to control sparkle
-        this.satAndBalance = 255;
+        this.satAndBalance = 255 - random(0, 100);
 
         if (!hasExploded) {
             this.particleIndex = index;
