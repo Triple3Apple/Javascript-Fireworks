@@ -161,6 +161,40 @@ class FireworkPatterns {
 
         this.numberOneVectorArray = this.combineVectorsComps(this.numberOneVectorsX, this.numberOneVectorsY, 2);
 
+        this.numberTwoVectorsX = 
+        [
+            -1, 0, 1,
+            -2, 1,
+            -3, 1,
+            -3, -2, -1, 1,
+            -1, 1,
+            -1, 1,
+            -1, 1,
+            -1, 1,
+            -1, 1,
+            -3, -2, -1, 1, 2, 3,
+            -3, 3,
+            -3, -2, -1, 0, 1, 2, 3
+        ]
+
+        this.numberTwoVectorsY = 
+        [
+            -5, -5, -5,
+            -4, -4,
+            -3, -3,
+            -2, -2, -2, -2, 
+            -1, -1,
+            0, 0, 
+            1, 1,
+            2, 2,
+            3, 3,
+            4, 4, 4, 4, 4, 4, 
+            5, 5,
+            6, 6, 6, 6, 6, 6, 6
+        ]
+
+        this.numberTwoVectorArray = this.combineVectorsComps(this.numberTwoVectorsX, this.numberTwoVectorsY, 2);
+
     }
 
     // reductionInt reduces the size of the vectors

@@ -12,18 +12,22 @@ class Particle {
         this.pos = createVector(x, y);
         this.fireworkExploded = hasExploded;
         //this.lifespan = 255; //    - random(0, 200);        // firework lifetime
-        this.lifespan = 300 - random(0, 120);        // defualt = 275
+        //this.lifespan = 300 - random(0, 120);        // defualt = 275
+        this.lifespan = 340 - this.getRandomInt(0, 120);
+        
         this.hu = hu;
         this.acc = createVector(0, 0);      // acceleration
         this.willSparkle = willSparkle;
         this.makeSparkleAppear = false;
-        this.randomSparkleDuration = random(0, 10);
+        //this.randomSparkleDuration = random(0, 10);
+        this.randomSparkleDuration = this.getRandomArbitrary(0, 15);
         this.sparkleTime = this.lifespan/2;
 
         this.size = fireworkSize;   // controls the size of firework
 
         // will be used to control sparkle
-        this.satAndBalance = 255 - random(0, 100);
+        this.satAndBalance = 255 - this.getRandomInt(0, 100);
+        //this.satAndBalance = 255 - random(0, 100);
 
         if (!hasExploded) {
             this.particleIndex = index;
@@ -32,7 +36,10 @@ class Particle {
 
         // if firework did not explode
         if (this.fireworkExploded) {
-            this.vel = createVector(0, random(-18, -8));    // velocity, y determines how high firework will go, x is horizontal drift
+            //this.vel = createVector(0, random(-18, -8));    // velocity, y determines how high firework will go, x is horizontal drift
+            this.vel = createVector(0, this.getRandomInt(-18, -8));
+
+
             //this.vel = createVector(random(2, -2), random(-12, -8));      // this makes the fireworks curve a bit
         } else {
 
@@ -40,7 +47,8 @@ class Particle {
             {
                 this.vel = p5.Vector.random2D();    // random 2d direction vector (original)
                 this.vel.mult(this.size/3);
-                this.vel.mult(random(2, 10));       // how dar the partcles spread out, random(2, 100) creates huge fireworks
+                //this.vel.mult(random(2, 10));       // how dar the partcles spread out, random(2, 100) creates huge fireworks
+                this.vel.mult(this.getRandomInt(2, 10));
             }
             else    // other firework patterns
             {
@@ -123,5 +131,15 @@ class Particle {
 
         //creates a pixel at that point
         point(this.pos.x, this.pos.y);
+    }
+
+    getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    getRandomArbitrary(min, max) {
+        return Math.random() * (max - min) + min;
     }
 }

@@ -18,6 +18,7 @@ let nextMinute;
 let timeSet = false;
 
 function setup() {
+  frameRate(60);
   let canvas = createCanvas(windowWidth, windowHeight);
   
   fireworkPatterns = new FireworkPatterns();
@@ -32,16 +33,17 @@ function setup() {
   strokeWeight(4);
   background(0);
 
-  nextMinute = date.getMinutes() + 1;
+  //nextMinute = date.getMinutes() + 1;
 
-  
+  update(false);
+  runClock();
 }
 
 // TODO: Add a way to make special fireworks go off at every hour?
 
 function draw() {
 
-  
+  /*
   if (timeSet == false)
   {
     let d = new Date();
@@ -70,19 +72,20 @@ function draw() {
       setInterval(verifyTime, 60000)
     }
   }
+  */
 
   colorMode(RGB);
-  background(0, 0, 0, 25);
+  //background(0, 0, 0, 25);
   clear()
   
-  if (random(1) < fireworkChance) 
+  if (Math.random() < fireworkChance) 
   {
     let fireworkPatterns = new FireworkPatterns();
     // TODO: allow users to choose what they want for the fireworks 
     // create fireworks (firework types, hasRandomAngle, willSparkle)
     // 11 = normal firework, 12 = creeper, 13 = heart
     // -1 - colon, 0 = number 0, 1 = 1
-    let fireworkTypesChosen = [0];   // make this chooseable via WPE
+    let fireworkTypesChosen = [13];   // make this chooseable via WPE
     fireworks.push(new Firework(fireworkTypesChosen, true, true, fireworkPatterns, null));    // Creates FIREWORK object
     
   }
@@ -98,6 +101,67 @@ function draw() {
   }
 }
 
+
+// NEW ~~~ http://jsfiddle.net/jfriend00/u7Hc5/
+function update(showSeconds) {
+  var now = new Date();
+  var hours = now.getHours();
+  var minutes = now.getMinutes();
+  var seconds = now.getSeconds();
+  if (!showSeconds) {
+      // round the minutes
+      if (seconds > 30) {
+          ++minutes;
+          if (minutes >= 60) {
+              minutes -= 60;
+              ++hours;
+              if (hours >= 24) {
+                  hours = 0;
+              }
+          }
+      }
+  }
+  var str = (hours) + ":" + twoDigits(minutes);
+  if (showSeconds) {
+      str += ":" + twoDigits(seconds);
+  }
+  //document.getElementById(id).innerHTML = str;
+  console.log(str);
+}
+
+function runClock() {
+  var now = new Date();
+  var timeToNextTick = (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
+  setTimeout(function() {
+      update(false);
+      runClock();
+  }, timeToNextTick);
+
+  // new
+
+  let fireworkTypesChosen = [0];   // make this chooseable via WPE
+  fireworks.push(new Firework(fireworkTypesChosen, true, true, fireworkPatterns, true));    // Creates FIREWORK object
+  let fireworkPatterns1 = new FireworkPatterns();
+  fireworks.push(new Firework(fireworkTypesChosen, true, true, fireworkPatterns1, true));
+  fireworkTypesChosen = [-1];
+  let fireworkPatterns2 = new FireworkPatterns();
+  fireworks.push(new Firework(fireworkTypesChosen, true, true, fireworkPatterns2, true));
+  fireworkTypesChosen = [12];
+  let fireworkPatterns3 = new FireworkPatterns();
+  fireworks.push(new Firework(fireworkTypesChosen, true, true, fireworkPatterns3, true));
+  let fireworkPatterns4 = new FireworkPatterns();
+  fireworks.push(new Firework(fireworkTypesChosen, true, true, fireworkPatterns4, true));
+}  
+
+function twoDigits(val) {
+  val = val + "";
+  if (val.length < 2) {
+      val = "0" + val;
+  }
+  return val;
+}
+
+/*
 function fireTimeFirework()
 {
   let d = new Date();
@@ -133,3 +197,4 @@ function verifyTime()
     nextMinute = tempMinutes + 1;
   }
 }
+*/

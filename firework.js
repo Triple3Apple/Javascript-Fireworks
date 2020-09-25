@@ -11,7 +11,8 @@ class Firework {
     // sparkle (bool) decides whether the firework particle will sparkle
     constructor(fireworkTypes, hasRandomAngle, sparkle, fireworkPatterns, isTime, timeDigit) 
     {
-        this.hu = random(255);
+        //this.hu = random(255);
+        this.hu = this.getRandomInt(0, 255)
         if (timeDigit == null)
         {
             this.firework = new Particle(random(width), height, this.hu, true);
@@ -58,7 +59,7 @@ class Firework {
         this.willSparkle = sparkle;
         this.types = fireworkTypes; // holds array of firework types (1 = normal fireworks, 2 = creeper fireworks)
         this.hasRandomAngle = hasRandomAngle;
-        console.log(this.patterns);
+        //console.log(this.patterns);
     }
 
     done() {
@@ -81,7 +82,7 @@ class Firework {
                 this.exploded = true;
                 //let randomIndex = this.types[random(0, this.types.length - 1)];
                 let randomIndex = this.types[Math.floor(Math.random() * this.types.length)];
-                console.log(randomIndex);
+                //console.log(randomIndex);
                 this.explode(randomIndex, this.hasRandomAngle);
             }
 
@@ -101,7 +102,8 @@ class Firework {
     // create a bunch of particles
     explode(fireworkType, hasRandomAngle) {
         // generate random firework size
-        let fireworkSize = random(3, 6);
+        //let fireworkSize = random(3, 6);
+        let fireworkSize = this.getRandomArbitrary(3, 6);
 
         // TODO: select a random pattern?
         let selectedPattern;
@@ -207,5 +209,9 @@ class Firework {
         min = Math.ceil(min);
         max = Math.floor(max);
         return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    getRandomArbitrary(min, max) {
+        return Math.random() * (max - min) + min;
     }
 }
