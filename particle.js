@@ -13,7 +13,7 @@ class Particle {
         this.fireworkExploded = hasExploded;
         //this.lifespan = 255; //    - random(0, 200);        // firework lifetime
         //this.lifespan = 300 - random(0, 120);        // defualt = 275
-        this.lifespan = 340 - this.getRandomInt(0, 120);
+        this.lifespan = 500 - this.getRandomInt(0, 150);
         
         this.hu = hu;
         this.acc = createVector(0, 0);      // acceleration
@@ -37,8 +37,7 @@ class Particle {
         // if firework did not explode
         if (this.fireworkExploded) {
             //this.vel = createVector(0, random(-18, -8));    // velocity, y determines how high firework will go, x is horizontal drift
-            this.vel = createVector(0, this.getRandomInt(-18, -8));
-
+            this.vel = createVector(0, this.getRandomInt(-20, -8));
 
             //this.vel = createVector(random(2, -2), random(-12, -8));      // this makes the fireworks curve a bit
         } else {
@@ -89,7 +88,7 @@ class Particle {
             this.lifespan -= 4;         // reduces firework lifespan
 
             // sparkle code
-            if (this.willSparkle == true && this.lifespan < this.sparkleTime )
+            if (this.willSparkle == true && this.lifespan < (this.sparkleTime/2 + this.sparkleTime/3))
             {
                 if (this.makeSparkleAppear == false)
                 {
@@ -118,12 +117,13 @@ class Particle {
     }
 
     show() {
-        colorMode(HSB);
+        colorMode(HSB, 150);        // 150 makes it fade away/transparency
 
         if (!this.fireworkExploded) {
             strokeWeight(2);
             // this.hu contols the color
             stroke(this.hu, this.satAndBalance, this.satAndBalance, this.lifespan);
+            //stroke(255, this.lifespan)
         } else {
             strokeWeight(4);
             stroke(this.hu, 255, 255);

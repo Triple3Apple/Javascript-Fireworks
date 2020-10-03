@@ -7,7 +7,7 @@
 
 const fireworks = [];
 let gravity;
-let fireworkChance = 0.01;      // increase firework chance when it is a current time
+let fireworkChance = 0.02;      // increase firework chance when it is a current time
 
 // new
 let canvas;
@@ -85,7 +85,7 @@ function draw() {
     // create fireworks (firework types, hasRandomAngle, willSparkle)
     // 11 = normal firework, 12 = creeper, 13 = heart
     // -1 - colon, 0 = number 0, 1 = 1
-    let fireworkTypesChosen = [8];   // make this chooseable via WPE
+    let fireworkTypesChosen = [11, 12, 13];   // make this chooseable via WPE
     fireworks.push(new Firework(fireworkTypesChosen, true, true, fireworkPatterns, null));    // Creates FIREWORK object
     
   }
@@ -138,7 +138,31 @@ function runClock() {
   }, timeToNextTick);
 
   // new
+  var d1 = new Date();
+  var hours = d1.getHours();
+  if (hours >= 13)
+  {
+    hours = hours - 12;
+  }
 
+  var minutes = d1.getMinutes();
+
+  var colonStr = ":";
+  let timeAsString = hours.toString().concat(colonStr, minutes.toString());
+  console.log(timeAsString);
+  let fireworkPatternsTime = new FireworkPatterns();
+  let fireworkTypesChosentemp = [20];   // make this chooseable via WPE
+  fireworks.push(new Firework(fireworkTypesChosentemp, true, true, fireworkPatternsTime, true, hours, minutes));
+  let fireworkPatternsTime1 = new FireworkPatterns();
+  fireworks.push(new Firework(fireworkTypesChosentemp, true, true, fireworkPatternsTime1, true, hours, minutes));
+  let fireworkPatternsTime2 = new FireworkPatterns();
+  fireworks.push(new Firework(fireworkTypesChosentemp, true, true, fireworkPatternsTime2, true, hours, minutes));
+  let fireworkPatternsTime3 = new FireworkPatterns();
+  fireworks.push(new Firework(fireworkTypesChosentemp, true, true, fireworkPatternsTime3, true, hours, minutes));
+
+
+
+  /*
   let fireworkTypesChosen = [0];   // make this chooseable via WPE
   fireworks.push(new Firework(fireworkTypesChosen, true, true, fireworkPatterns, true));    // Creates FIREWORK object
   let fireworkPatterns1 = new FireworkPatterns();
@@ -151,6 +175,7 @@ function runClock() {
   fireworks.push(new Firework(fireworkTypesChosen, true, true, fireworkPatterns3, true));
   let fireworkPatterns4 = new FireworkPatterns();
   fireworks.push(new Firework(fireworkTypesChosen, true, true, fireworkPatterns4, true));
+  */
 }  
 
 function twoDigits(val) {

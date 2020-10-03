@@ -9,38 +9,19 @@ class Firework {
     // fireworkTypes holds array of firework types (11 = normal fireworks, 12 = creeper fireworks, 13 = heart)
     // hasRandomAngle is a bool that determines if fireworks have a random angle
     // sparkle (bool) decides whether the firework particle will sparkle
-    constructor(fireworkTypes, hasRandomAngle, sparkle, fireworkPatterns, isTime, timeDigit) 
+    constructor(fireworkTypes, hasRandomAngle, sparkle, fireworkPatterns, isTime, timeHours, timeMins) 
     {
         //this.hu = random(255);
         this.hu = this.getRandomInt(0, 255)
-        if (timeDigit == null)
+        if (timeHours == null)
         {
             this.firework = new Particle(random(width), height, this.hu, true);
         }
         else
         {
-            switch (timeDigit)
-            {
-                case 1:
-                    this.firework = new Particle(width/5, height, this.hu, true);
-                    break;
-                case 2:
-                    this.firework = new Particle((width/5 + width/5), height, this.hu, true);
-                    break;
-                case 3:
-                    this.firework = new Particle((width/5 + width/5 + width/5), height, this.hu, true);
-                    break;
-                case 4:
-                    this.firework = new Particle((width/5 + width/5 + width/5 + width/5), height, this.hu, true);
-                    break;
-                case 5:
-                    this.firework = new Particle((width/5 + width/5 + width/5 + width/5 + width/5), height, this.hu, true);
-                    break;
-                default:
-                    console.log("error!!!!!!!!!!!");
-                    this.firework = new Particle(random(width), height, this.hu, true);
-                    break;
-            }
+            this.firework = new Particle(random(width), height, this.hu, true);
+            this.hour = timeHours;
+            this.minute = timeMins;
         }
         
         this.exploded = false;
@@ -85,12 +66,16 @@ class Firework {
                 //console.log(randomIndex);
                 this.explode(randomIndex, this.hasRandomAngle);
             }
+        }
+        else
+        {
 
-            
         }
 
         for (let i = this.particles.length - 1; i >= 0; i--) {
             this.particles[i].applyForce(createVector(0, 0.05));        // gravity of firework paricles
+            
+            // this.getRandomArbitrary(min, max)
             this.particles[i].update();
 
             if (this.particles[i].done()) {
@@ -103,7 +88,7 @@ class Firework {
     explode(fireworkType, hasRandomAngle) {
         // generate random firework size
         //let fireworkSize = random(3, 6);
-        let fireworkSize = this.getRandomArbitrary(3, 6);
+        let fireworkSize = this.getRandomArbitrary(3, 5);
 
         // TODO: select a random pattern?
         let selectedPattern;
@@ -154,9 +139,6 @@ class Firework {
                 hasRandomAngle = false;
                 break;
 
-
-
-
             case 11: // regular firework
                 selectedPattern = null;
                 break;
@@ -166,6 +148,21 @@ class Firework {
             case 13: // heart firework
                 selectedPattern = this.patterns.heartVectorArray;
                 break;
+
+            case 20:  // time firework
+                
+                // temporary
+                //selectedPattern = this.patterns.numberOneVectorArray;
+                hasRandomAngle = false;
+
+                // remove this
+                selectedPattern = this.getCombinedTimePattern(this.hour, this.minute, this.patterns);
+
+                //selectedPattern = this.getCombinedTimePattern(this.hour, this.minute, this.patterns);
+                
+                
+                break;
+
             default:
                 selectedPattern = null;
                 break;
@@ -249,5 +246,312 @@ class Firework {
 
     getRandomArbitrary(min, max) {
         return Math.random() * (max - min) + min;
+    }
+
+    getCombinedTimePattern(hoursNum, minutesNum, patterns) {
+
+        let combinedTimePattern = this.patterns.colonVectorArray;
+        console.log(combinedTimePattern);
+
+        // hours
+        if (hoursNum > 9)   // only one digit for hour, like 8:12
+        {
+            let firstDigitPattern; // tenth place digit
+            let secondDigitPattern;
+
+            if (hoursNum >= 20)
+            {
+                firstDigitPattern = patterns.numberTwoVectorArray;
+            }
+            else
+            {
+                firstDigitPattern = patterns.numberOneVectorArray;
+            }
+
+            // second digit
+            
+            var l = Math.pow(10, Math.floor(Math.log(hoursNum)/Math.log(10))-1);
+            var b = Math.floor(hoursNum/l);
+            var secondHourDigit = b - Math.floor(b/10) * 10;
+
+            switch (secondHourDigit)
+            {
+                case 0:
+                    secondDigitPattern = patterns.numberZeroVectorArray;
+                    break;
+                case 1:
+                    secondDigitPattern = patterns.numberOneVectorArray;
+                    break;
+                case 2:
+                    secondDigitPattern = patterns.numberTwoVectorArray;
+                    break;
+                case 3:
+                    secondDigitPattern = patterns.numberThreeVectorArray;
+                    break;
+                case 4:
+                    secondDigitPattern = patterns.numberFourVectorArray;
+                    break;
+                case 5:
+                    secondDigitPattern = patterns.numberFiveVectorArray;
+                    break;
+                case 6:
+                    secondDigitPattern = patterns.numberSixVectorArray;
+                    break;
+                case 7:
+                    secondDigitPattern = patterns.numberSevenVectorArray;
+                    break;
+                case 8:
+                    secondDigitPattern = patterns.numberEightVectorArray;
+                    break;
+                case 9:
+                    secondDigitPattern = patterns.numberNineVectorArray;
+                    break;
+                default:
+                    secondDigitPattern = patterns.colonVectorArray;
+                    console.log("error in switch");
+                    break;
+            }
+
+            // offsetting x of secondDigitPattern by 9
+            for (var index = 0; index < secondDigitPattern.length; index++)
+            {
+                var offsetArrayIndex = createVector(secondDigitPattern[index].x - 3, secondDigitPattern[index].y);
+                combinedTimePattern.push(offsetArrayIndex)
+                //secondDigitPattern[index].x = secondDigitPattern[index].x - 9;
+                //combinedTimePattern[index]
+            }
+
+            for (var index = 0; index < firstDigitPattern.length; index++)
+            {
+                var offsetArrayIndex = createVector(firstDigitPattern[index].x - 7, firstDigitPattern[index].y);
+                combinedTimePattern.push(offsetArrayIndex)
+
+                //firstDigitPattern[index].x = firstDigitPattern[index].x - 15;
+            }
+
+            //combinedTimePattern.concat(secondDigitPattern, firstDigitPattern);  // added the first/second digit of the hour
+            console.log(combinedTimePattern);
+
+            console.log("2nd hour digit");
+            console.log(secondHourDigit);
+
+            //return combinedTimePattern;         //    <---- remove this!
+            
+        }
+        else
+        {
+            let secondDigitPattern;
+
+            switch (hoursNum)
+            {
+                case 0:
+                    secondDigitPattern = patterns.numberZeroVectorArray;
+                    break;
+                case 1:
+                    secondDigitPattern = patterns.numberOneVectorArray;
+                    break;
+                case 2:
+                    secondDigitPattern = patterns.numberTwoVectorArray;
+                    break;
+                case 3:
+                    secondDigitPattern = patterns.numberThreeVectorArray;
+                    break;
+                case 4:
+                    secondDigitPattern = patterns.numberFourVectorArray;
+                    break;
+                case 5:
+                    secondDigitPattern = patterns.numberFiveVectorArray;
+                    break;
+                case 6:
+                    secondDigitPattern = patterns.numberSixVectorArray;
+                    break;
+                case 7:
+                    secondDigitPattern = patterns.numberSevenVectorArray;
+                    break;
+                case 8:
+                    secondDigitPattern = patterns.numberEightVectorArray;
+                    break;
+                case 9:
+                    secondDigitPattern = patterns.numberNineVectorArray;
+                    break;
+                default:
+                    secondDigitPattern = patterns.colonVectorArray;
+                    break;
+            }
+
+            for (var index = 0; index < secondDigitPattern.length; index++)
+            {
+                var offsetArrayIndex = createVector(secondDigitPattern[index].x - 3, secondDigitPattern[index].y);
+                combinedTimePattern.push(offsetArrayIndex);
+                //secondDigitPattern[index].x = secondDigitPattern[index].x - 9;
+                //combinedTimePattern[index]
+            }
+
+            //return combinedTimePattern;         //    <---- remove this!
+        }
+
+        // minutes
+
+        let firstDigitPattern; // tenth place digit
+        let secondDigitPattern;
+
+        
+
+        if (minutesNum < 10)
+        {
+            firstDigitPattern = patterns.numberZeroVectorArray;
+
+            switch (minutesNum)
+            {
+                case 0:
+                    secondDigitPattern = patterns.numberZeroVectorArray;
+                    break;
+                case 1:
+                    secondDigitPattern = patterns.numberOneVectorArray;
+                    break;
+                case 2:
+                    secondDigitPattern = patterns.numberTwoVectorArray;
+                    break;
+                case 3:
+                    secondDigitPattern = patterns.numberThreeVectorArray;
+                    break;
+                case 4:
+                    secondDigitPattern = patterns.numberFourVectorArray;
+                    break;
+                case 5:
+                    secondDigitPattern = patterns.numberFiveVectorArray;
+                    break;
+                case 6:
+                    secondDigitPattern = patterns.numberSixVectorArray;
+                    break;
+                case 7:
+                    secondDigitPattern = patterns.numberSevenVectorArray;
+                    break;
+                case 8:
+                    secondDigitPattern = patterns.numberEightVectorArray;
+                    break;
+                case 9:
+                    secondDigitPattern = patterns.numberNineVectorArray;
+                    break;
+                default:
+                    secondDigitPattern = patterns.colonVectorArray;
+                    break;
+            }
+
+            // offsetting x of secondDigitPattern by 3
+            for (var index = 0; index < secondDigitPattern.length; index++)
+            {
+                var offsetArrayIndex = createVector(secondDigitPattern[index].x + 7, secondDigitPattern[index].y);
+                combinedTimePattern.push(offsetArrayIndex);
+            }
+
+            for (var index = 0; index < firstDigitPattern.length; index++)
+            {
+                var offsetArrayIndex = createVector(firstDigitPattern[index].x + 3, firstDigitPattern[index].y);
+                combinedTimePattern.push(offsetArrayIndex);
+            }
+
+        }
+        else
+        {
+            // tenth minute
+            var firstMinuteDigit = Math.floor(minutesNum / 10);
+            switch(firstMinuteDigit)
+            {
+                case 0:
+                    firstDigitPattern = patterns.numberZeroVectorArray;
+                    break;
+                case 1:
+                    firstDigitPattern = patterns.numberOneVectorArray;
+                    break;
+                case 2:
+                    firstDigitPattern = patterns.numberTwoVectorArray;
+                    break;
+                case 3:
+                    firstDigitPattern = patterns.numberThreeVectorArray;
+                    break;
+                case 4:
+                    firstDigitPattern = patterns.numberFourVectorArray;
+                    break;
+                case 5:
+                    firstDigitPattern = patterns.numberFiveVectorArray;
+                    break;
+                case 6:
+                    firstDigitPattern = patterns.numberSixVectorArray;
+                    break;
+                case 7:
+                    firstDigitPattern = patterns.numberSevenVectorArray;
+                    break;
+                case 8:
+                    firstDigitPattern = patterns.numberEightVectorArray;
+                    break;
+                case 9:
+                    firstDigitPattern = patterns.numberNineVectorArray;
+                    break;
+                default:
+                    firstDigitPattern = pattrens.colonVectorArray;
+                    break;
+            }
+
+
+            var l = Math.pow(10, Math.floor(Math.log(minutesNum)/Math.log(10))-1);
+            var b = Math.floor(minutesNum/l);
+            var secondMinuteDigit = b - Math.floor(b/10) * 10;
+
+            console.log("second minute digit");
+            console.log(secondMinuteDigit);
+
+            switch(secondMinuteDigit)
+            {
+                case 0:
+                    secondDigitPattern = patterns.numberZeroVectorArray;
+                    break;
+                case 1:
+                    secondDigitPattern = patterns.numberOneVectorArray;
+                    break;
+                case 2:
+                    secondDigitPattern = patterns.numberTwoVectorArray;
+                    break;
+                case 3:
+                    secondDigitPattern = patterns.numberThreeVectorArray;
+                    break;
+                case 4:
+                    secondDigitPattern = patterns.numberFourVectorArray;
+                    break;
+                case 5:
+                    secondDigitPattern = patterns.numberFiveVectorArray;
+                    break;
+                case 6:
+                    secondDigitPattern = patterns.numberSixVectorArray;
+                    break;
+                case 7:
+                    secondDigitPattern = patterns.numberSevenVectorArray;
+                    break;
+                case 8:
+                    secondDigitPattern = patterns.numberEightVectorArray;
+                    break;
+                case 9:
+                    secondDigitPattern = patterns.numberNineVectorArray;
+                    break;
+                default:
+                    secondDigitPattern = patterns.colonVectorArray;
+                    break;
+            }
+
+            // offsetting x of secondDigitPattern by 3
+            for (var index = 0; index < secondDigitPattern.length; index++)
+            {
+                var offsetArrayIndex = createVector(secondDigitPattern[index].x + 7, secondDigitPattern[index].y);
+                combinedTimePattern.push(offsetArrayIndex);
+            }
+
+            for (var index = 0; index < firstDigitPattern.length; index++)
+            {
+                var offsetArrayIndex = createVector(firstDigitPattern[index].x + 3, firstDigitPattern[index].y);
+                combinedTimePattern.push(offsetArrayIndex);
+            }
+        }
+
+        return combinedTimePattern;
     }
 }
