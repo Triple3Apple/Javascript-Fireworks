@@ -121,6 +121,42 @@ class Firework {
                 selectedPattern = this.patterns.numberOneVectorArray;
                 hasRandomAngle = false;
                 break;
+            case 2:
+                selectedPattern = this.patterns.numberTwoVectorArray;
+                hasRandomAngle = false;
+                break;
+            case 3:
+                selectedPattern = this.patterns.numberThreeVectorArray;
+                hasRandomAngle = false;
+                break;
+            case 4:
+                selectedPattern = this.patterns.numberFourVectorArray;
+                hasRandomAngle = false;
+                break;
+            case 5:
+                selectedPattern = this.patterns.numberFiveVectorArray;
+                hasRandomAngle = false;
+                break;
+            case 6:
+                selectedPattern = this.patterns.numberSixVectorArray;
+                hasRandomAngle = false;
+                break;
+            case 7:
+                selectedPattern = this.patterns.numberSevenVectorArray;
+                hasRandomAngle = false;
+                break;
+            case 8:
+                selectedPattern = this.patterns.numberEightVectorArray;
+                hasRandomAngle = false;
+                break;
+            case 9:
+                selectedPattern = this.patterns.numberNineVectorArray;
+                hasRandomAngle = false;
+                break;
+
+
+
+
             case 11: // regular firework
                 selectedPattern = null;
                 break;

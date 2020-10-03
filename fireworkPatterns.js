@@ -163,37 +163,275 @@ class FireworkPatterns {
 
         this.numberTwoVectorsX = 
         [
-            -1, 0, 1,
-            -2, 1,
-            -3, 1,
-            -3, -2, -1, 1,
-            -1, 1,
-            -1, 1,
-            -1, 1,
-            -1, 1,
-            -1, 1,
-            -3, -2, -1, 1, 2, 3,
-            -3, 3,
+            -3, -2, -1, 0, 1, 2, 3,
+            -3, -2, -1, 0, 1, 2, 3,
+                              2, 3,
+                              2, 3,
+                              2, 3,
+            -3, -2, -1, 0, 1, 2, 3,
+            -3, -2, -1, 0, 1, 2, 3,
+            -2, -3,
+            -2, -3,
+            -2, -3,
+            -3, -2, -1, 0, 1, 2, 3,
             -3, -2, -1, 0, 1, 2, 3
         ]
 
         this.numberTwoVectorsY = 
         [
-            -5, -5, -5,
-            -4, -4,
-            -3, -3,
-            -2, -2, -2, -2, 
-            -1, -1,
-            0, 0, 
-            1, 1,
+            -5, -5, -5, -5, -5, -5, -5,
+            -4, -4, -4, -4, -4, -4, -4,
+                                -3, -3,
+                                -2, -2,
+                                -1, -1,
+            0, 0, 0, 0, 0, 0, 0,
+            1, 1, 1, 1, 1, 1, 1,
             2, 2,
             3, 3,
-            4, 4, 4, 4, 4, 4, 
-            5, 5,
+            4, 4,
+            5, 5, 5, 5, 5, 5, 5,
             6, 6, 6, 6, 6, 6, 6
         ]
 
         this.numberTwoVectorArray = this.combineVectorsComps(this.numberTwoVectorsX, this.numberTwoVectorsY, 2);
+
+        this.numberThreeVectorsX = 
+        [
+            -3, -2, -1, 0, 1, 2, 3,
+            -3, -2, -1, 0, 1, 2, 3,
+                              2, 3,
+                              2, 3,
+                              2, 3,
+            -3, -2, -1, 0, 1, 2, 3,
+            -3, -2, -1, 0, 1, 2, 3,
+                              2, 3,
+                              2, 3,
+                              2, 3,
+            -3, -2, -1, 0, 1, 2, 3,
+            -3, -2, -1, 0, 1, 2, 3,
+        ]
+
+        this.numberThreeVectorsY = 
+        [
+            -5, -5, -5, -5, -5, -5, -5,
+            -4, -4, -4, -4, -4, -4, -4,
+                                -3, -3,
+                                -2, -2,
+                                -1, -1,
+            0, 0, 0, 0, 0, 0, 0,
+            1, 1, 1, 1, 1, 1, 1,
+                                2, 2,
+                                3, 3,
+                                4, 4,
+            5, 5, 5, 5, 5, 5, 5,
+            6, 6, 6, 6, 6, 6, 6
+        ]
+
+        this.numberThreeVectorArray = this.combineVectorsComps(this.numberThreeVectorsX, this.numberThreeVectorsY, 2);
+
+        this.numberFourVectorsX = 
+        [
+            -3, -2,          2, 3,
+            -3, -2,          2, 3,
+            -3, -2,          2, 3,
+            -3, -2,          2, 3,
+            -3, -2,          2, 3,
+            -3, -2, -1, 0, 1, 2, 3,
+            -3, -2, -1, 0, 1, 2, 3,
+                              2, 3,
+                              2, 3,
+                              2, 3,
+                              2, 3,
+                              2, 3
+        ]
+
+        this.numberFourVectorsY = 
+        [
+            -5, -5,      -5, -5,
+            -4, -4,      -4, -4,
+            -3, -3,      -3, -3,
+            -2, -2,      -2, -2,
+            -1, -1,      -1, -1,
+            0, 0, 0, 0, 0, 0, 0,
+            1, 1, 1, 1, 1, 1, 1,
+                            2, 2,
+                            3, 3,
+                            4, 4,
+                            5, 5,
+                            6, 6
+        ]
+
+        this.numberFourVectorArray = this.combineVectorsComps(this.numberFourVectorsX, this.numberFourVectorsY, 2);
+
+        this.numberFiveVectorsX = 
+        [
+            -3, -2, -1, 0, 1, 2, 3,
+            -3, -2, -1, 0, 1, 2, 3,
+            -2, -3,
+            -2, -3,
+            -2, -3,
+            -3, -2, -1, 0, 1, 2, 3,
+            -3, -2, -1, 0, 1, 2, 3,
+                              2,  3,
+                              2,  3,
+                              2,  3,
+            -3, -2, -1, 0, 1, 2, 3,
+            -3, -2, -1, 0, 1, 2, 3
+        ]
+
+        this.numberFiveVectorsY = 
+        [
+            -5, -5, -5, -5, -5, -5, -5,
+            -4, -4, -4, -4, -4, -4, -4,
+            -3, -3,
+            -2, -2,
+            -1, -1,
+            0, 0, 0, 0, 0, 0, 0,
+            1, 1, 1, 1, 1, 1, 1,
+                            2, 2,
+                            3, 3,
+                            4, 4,
+            5, 5, 5, 5, 5, 5, 5,
+            6, 6, 6, 6, 6, 6, 6
+        ]
+
+        this.numberFiveVectorArray = this.combineVectorsComps(this.numberFiveVectorsX, this.numberFiveVectorsY, 2);
+
+        this.numberSixVectorsX = 
+        [
+            -3, -2, -1, 0, 1, 2, 3,
+            -3, -2, -1, 0, 1, 2, 3,
+            -2, -3,
+            -2, -3,
+            -2, -3,
+            -3, -2, -1, 0, 1, 2, 3,
+            -3, -2, -1, 0, 1, 2, 3,
+            -2, -3,           2,  3,
+            -2, -3,           2,  3,
+            -2, -3,           2,  3,
+            -3, -2, -1, 0, 1, 2, 3,
+            -3, -2, -1, 0, 1, 2, 3
+        ]
+
+        this.numberSixVectorsY = 
+        [
+            -5, -5, -5, -5, -5, -5, -5,
+            -4, -4, -4, -4, -4, -4, -4,
+            -3, -3,
+            -2, -2,
+            -1, -1,
+            0, 0, 0, 0, 0, 0, 0,
+            1, 1, 1, 1, 1, 1, 1,
+            2, 2,           2, 2,
+            3, 3,           3, 3,
+            4, 4,           4, 4,
+            5, 5, 5, 5, 5, 5, 5,
+            6, 6, 6, 6, 6, 6, 6
+        ]
+
+        this.numberSixVectorArray = this.combineVectorsComps(this.numberSixVectorsX, this.numberSixVectorsY, 2);
+
+        this.numberSevenVectorsX = 
+        [
+            -3, -2, -1, 0, 1, 2, 3,
+            -3, -2, -1, 0, 1, 2, 3,
+                              2, 3,
+                              2, 3,
+                              2, 3,
+                              2, 3,
+                              2, 3,
+                              2, 3,
+                              2, 3,
+                              2, 3,
+                              2, 3,
+                              2, 3
+        ]
+
+        this.numberSevenVectorsY = 
+        [
+            -5, -5, -5, -5, -5, -5, -5,
+            -4, -4, -4, -4, -4, -4, -4,
+                                 -3, -3,
+                                 -2, -2,
+                                 -1, -1,
+                                  0, 0,
+                                  1, 1,
+                                  2, 2,
+                                  3, 3,
+                                  4, 4,
+                                  5, 5,
+                                  6, 6
+        ]
+
+        this.numberSevenVectorArray = this.combineVectorsComps(this.numberSevenVectorsX, this.numberSevenVectorsY, 2);
+
+        this.numberEightVectorsX = 
+        [
+            -3, -2, -1, 0, 1, 2, 3,
+            -3, -2, -1, 0, 1, 2, 3,
+            -2, -3,           2,  3,
+            -2, -3,           2,  3,
+            -2, -3,           2,  3,
+            -3, -2, -1, 0, 1, 2, 3,
+            -3, -2, -1, 0, 1, 2, 3,
+            -2, -3,           2,  3,
+            -2, -3,           2,  3,
+            -2, -3,           2,  3,
+            -3, -2, -1, 0, 1, 2, 3,
+            -3, -2, -1, 0, 1, 2, 3,
+        ]
+
+        this.numberEightVectorsY = 
+        [
+            -5, -5, -5, -5, -5, -5, -5,
+            -4, -4, -4, -4, -4, -4, -4,
+            -3, -3,           -3, -3,
+            -2, -2,           -2, -2,
+            -1, -1,           -1, -1,
+            0, 0, 0, 0, 0, 0, 0,
+            1, 1, 1, 1, 1, 1, 1,
+            2, 2,           2, 2,
+            3, 3,           3, 3,
+            4, 4,           4, 4,
+            5, 5, 5, 5, 5, 5, 5,
+            6, 6, 6, 6, 6, 6, 6
+        ]
+
+        this.numberEightVectorArray = this.combineVectorsComps(this.numberEightVectorsX, this.numberEightVectorsY, 2);
+
+        this.numberNineVectorsX = 
+        [
+            -3, -2, -1, 0, 1, 2, 3,
+            -3, -2, -1, 0, 1, 2, 3,
+            -2, -3,           2,  3,
+            -2, -3,           2,  3,
+            -2, -3,           2,  3,
+            -3, -2, -1, 0, 1, 2, 3,
+            -3, -2, -1, 0, 1, 2, 3,
+                             2,  3,
+                             2,  3,
+                             2,  3,
+                              2, 3,
+                              2, 3,
+        ]
+
+        this.numberNineVectorsY = 
+        [
+            -5, -5, -5, -5, -5, -5, -5,
+            -4, -4, -4, -4, -4, -4, -4,
+            -3, -3,           -3, -3,
+            -2, -2,           -2, -2,
+            -1, -1,           -1, -1,
+            0, 0, 0, 0, 0, 0, 0,
+            1, 1, 1, 1, 1, 1, 1,
+                             2, 2,
+                             3, 3,
+                             4, 4,
+                             5, 5,
+                             6, 6
+        ]
+
+        this.numberNineVectorArray = this.combineVectorsComps(this.numberNineVectorsX, this.numberNineVectorsY, 2);
 
     }
 

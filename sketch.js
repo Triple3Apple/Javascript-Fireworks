@@ -85,7 +85,7 @@ function draw() {
     // create fireworks (firework types, hasRandomAngle, willSparkle)
     // 11 = normal firework, 12 = creeper, 13 = heart
     // -1 - colon, 0 = number 0, 1 = 1
-    let fireworkTypesChosen = [13];   // make this chooseable via WPE
+    let fireworkTypesChosen = [8];   // make this chooseable via WPE
     fireworks.push(new Firework(fireworkTypesChosen, true, true, fireworkPatterns, null));    // Creates FIREWORK object
     
   }
